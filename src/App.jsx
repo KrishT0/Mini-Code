@@ -1,10 +1,12 @@
 import React from "react";
 import HeaderComponent from "@/components/custom/header";
+import EditorComponent from "@/components/custom/editor";
 
 function App() {
   return (
-    <div className="border-2 max-w-[1200px] ">
+    <div className=" h-screen ">
       <HeaderComponent />
+      <EditorComponent />
     </div>
   );
 }
