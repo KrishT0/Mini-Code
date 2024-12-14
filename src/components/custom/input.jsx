@@ -15,6 +15,15 @@ const InputComponent = forwardRef(({ language, defaultCode }, ref) => {
     setCode(defaultCode);
   }, [defaultCode]);
 
+  const editorOptions = {
+    fontFamily: "Space Mono",
+    fontSize: 13,
+    fontWeight: 700,
+    wordWrap: "on", 
+    wordWrapColumn: 80,
+    wrappingIndent: "indent"
+  };
+
   const onMount = (editor) => {
     editorRef.current = editor;
     editorRef.current.focus();
@@ -33,6 +42,7 @@ const InputComponent = forwardRef(({ language, defaultCode }, ref) => {
       onMount={onMount}
       value={code}
       onChange={(value) => setCode(value)}
+      options={editorOptions}
     />
   );
 });

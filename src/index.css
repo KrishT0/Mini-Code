@@ -3,12 +3,14 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Commissioner";
-  src: url("../src/assets/fonts/Commissioner-VariableFont_FLAR\,VOLM\,slnt\,wght.ttf");
+  font-family: "Space Mono";
+  src: url(../src/assets//fonts/SpaceMono-Regular.ttf);
 }
 
 body {
-  font-family: "Commissioner", serif;
+  font-family: "Space Mono", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
 }
 
 @layer base {

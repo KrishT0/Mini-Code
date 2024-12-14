@@ -1,12 +1,14 @@
 import { useState, useRef } from "react";
-import InputComponent from "@/components/custom/input";
-import OutputComponent from "@/components/custom/output";
-import { codeSnippets } from "@/constants/code-snippets";
-import { languageList } from "@/constants/language-versions";
 import { useMutation } from "@tanstack/react-query";
 import { executeCode } from "@/api";
+import InputComponent from "@/components/custom/input";
+import OutputComponent from "@/components/custom/output";
+import SmallLoader from "@/components/custom/loader";
+import { codeSnippets } from "@/constants/code-snippets";
+import { languageList } from "@/constants/language-versions";
 
 // shadcn UI components
+import { Button } from "../ui/button";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -20,16 +22,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "../ui/button";
 
 function EditorComponent() {
-  const [language, setLanguage] = useState("javascript");
-  const [code, setCode] = useState(codeSnippets.javascript);
+  const [language, setLanguage] = useState(
+    `${Object.keys(languageList)[0]} ${languageList.cpp}`
+  );
+  const [code, setCode] = useState(codeSnippets.cpp);
   const [output, setOutput] = useState("");
   const editorRef = useRef();
 
   const mutation = useMutation({
-    mutationFn: ({ language, code }) => executeCode(language, code),
+    mutationFn: ({ selectedLang, code }) => executeCode(selectedLang, code),
     onSuccess: (data) => {
       setOutput(data);
     },
@@ -44,13 +47,20 @@ function EditorComponent() {
   console.log(editorRef.current);
 
   function runCode() {
+    console.log("Running code");
     if (editorRef.current) {
       const code = editorRef.current.getValue();
-      mutation.mutate({ language, code });
+      const selectedLang = language.split(" ")[0];
+      mutation.mutate({ selectedLang, code });
     } else {
       console.log("Editor is not yet mounted");
     }
   }
+
+  function clearOutput() {
+    setOutput("");
+  }
+
   return (
     <div className="p-3 h-[90%]">
       <div className="py-5 h-[10%] flex gap-5">
@@ -62,23 +72,43 @@ function EditorComponent() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {Object.entries(languageList).map(([lang, version]) => (
-                <SelectItem
-                  key={lang}
-                  value={`${lang} ${version}`}
-                  className="hover:bg-gray-100"
-                >
-                  <p>
-                    {lang.charAt(0).toUpperCase() + lang.slice(1)}{" "}
-                    <span className="text-gray-500 ml-2">{version}</span>
-                  </p>
-                </SelectItem>
-              ))}
+              {Object.entries(languageList).map(([lang, version]) => {
+                let displayLang = lang;
+                if (lang === "csharp") {
+                  displayLang = "C#";
+                } else if (lang === "cpp") {
+                  displayLang = "C++";
+                } else if (lang === "php") {
+                  displayLang = "PHP";
+                } else {
+                  displayLang = lang.charAt(0).toUpperCase() + lang.slice(1);
+                }
+                return (
+                  <SelectItem
+                    key={lang}
+                    value={`${lang} ${version}`}
+                    className="hover:bg-gray-100"
+                  >
+                    <p>
+                      {displayLang}{" "}
+                      <span className="text-gray-500 ml-2">{version}</span>
+                    </p>
+                  </SelectItem>
+                );
+              })}
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button className="ml-3" variant="secondary" onClick={runCode}>
-          Run
+        <Button
+          className="ml-3"
+          variant="secondary"
+          onClick={runCode}
+          disabled={mutation.isPending}
+        >
+          {mutation.isPending ? <SmallLoader /> : "Run"}
+        </Button>
+        <Button className="ml-3" variant="secondary" onClick={clearOutput}>
+          Clear Output
         </Button>
       </div>
       <div className="h-[90%]">
@@ -88,7 +118,7 @@ function EditorComponent() {
         >
           <ResizablePanel defaultSize={50} minSize={30}>
             <InputComponent
-              language={language}
+              language={language.split(" ")[0]}
               defaultCode={code}
               ref={editorRef}
             />
