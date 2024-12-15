@@ -1,49 +1,28 @@
-import {
-  useState,
-  useEffect,
-  forwardRef,
-  useRef,
-  useImperativeHandle,
-} from "react";
-import Editor from "@monaco-editor/react";
+import { useState, useRef, forwardRef, useImperativeHandle } from "react";
 
-const InputComponent = forwardRef(({ language, defaultCode }, ref) => {
-  const [code, setCode] = useState(defaultCode);
-  const editorRef = useRef();
+// Shadcn UI components
+import { Textarea } from "@/components/ui/textarea";
 
-  useEffect(() => {
-    setCode(defaultCode);
-  }, [defaultCode]);
-
-  const editorOptions = {
-    fontFamily: "Space Mono",
-    fontSize: 13,
-    fontWeight: 700,
-    wordWrap: "on", 
-    wordWrapColumn: 80,
-    wrappingIndent: "indent"
-  };
-
-  const onMount = (editor) => {
-    editorRef.current = editor;
-    editorRef.current.focus();
-  };
+const InputComponent = forwardRef((_, ref) => {
+  const [input, setInput] = useState("");
+  const inputRef = useRef();
 
   useImperativeHandle(ref, () => ({
-    getValue: () => editorRef.current.getValue(),
+    getValue: () => inputRef.current.value,
   }));
 
   return (
-    <Editor
-      height="100%"
-      defaultLanguage={language}
-      language={language}
-      theme="vs-dark"
-      onMount={onMount}
-      value={code}
-      onChange={(value) => setCode(value)}
-      options={editorOptions}
-    />
+    <div className="p-3 border-2 h-full rounded-tr-md">
+      <h1>Input</h1>
+      <Textarea
+        ref={inputRef}
+        className="w-full py-1 scrollbar h-[90%] text-sm resize-none"
+        value={input}
+        onChange={(e) => {
+          setInput(e.target.value);
+        }}
+      />
+    </div>
   );
 });
 

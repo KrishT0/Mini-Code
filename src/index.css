@@ -13,6 +13,22 @@ body {
   font-weight: 600;
 }
 
+.scrollbar {
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #00000000;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #262626;
+    border-radius: 10px;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

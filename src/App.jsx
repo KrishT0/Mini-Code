@@ -1,4 +1,3 @@
-import React from "react";
 import HeaderComponent from "@/components/custom/header";
 import EditorComponent from "@/components/custom/editor";
 
