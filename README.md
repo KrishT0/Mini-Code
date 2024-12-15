@@ -40,13 +40,15 @@
 
 Here’s a quick video demonstration of Mini Code in action:
 
-<video width="100%" controls>
-  <source src="./public/mini-code-demo.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/6ba920c8-77e2-43e8-978c-8078c3dcf7f4
 
 ## 📦 Installation (For Developers)
 
 If you want to run this project locally:
+
+
+
+
 
 1. Clone the repository:
    ```bash
