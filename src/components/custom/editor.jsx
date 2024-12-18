@@ -75,7 +75,7 @@ function EditorComponent() {
 
   return (
     <div className="p-1 sm:p-3 h-[93%] sm:h-[90%]">
-      <div className="py-2 pt-3 sm:py-5 h-[12%] flex gap-2 sm:gap-5">
+      <div className="py-2 pt-3 sm:py-5 h-[10%] sm:h-[12%] flex gap-2 sm:gap-5">
         <Select defaultValue={language} onValueChange={selectLanguage}>
           <SelectTrigger className="w-[180px]">
             <SelectValue>{displayLang(language)}</SelectValue>
@@ -113,7 +113,7 @@ function EditorComponent() {
           Clear Output
         </Button>
       </div>
-      <div className="h-[88%]">
+      <div className="h-[90%] sm:h-[88%]">
         <ResizablePanelGroup
           direction={isDesktop ? "horizontal" : "vertical"}
           className=" rounded-lg border"
