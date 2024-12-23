@@ -7,6 +7,11 @@
   src: url(../src/assets//fonts/SpaceMono-Regular.ttf);
 }
 
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url(../src/assets//fonts/JetBrainsMono-Regular.ttf);
+}
+
 body {
   font-family: "Space Mono", serif;
   font-optical-sizing: auto;

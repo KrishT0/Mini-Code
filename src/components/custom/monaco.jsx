@@ -18,7 +18,7 @@ const MonacoEditorComponent = forwardRef(({ language, defaultCode }, ref) => {
   }, [defaultCode]);
 
   const editorOptions = {
-    fontFamily: "Space Mono",
+    fontFamily: "JetBrains Mono",
     fontSize: 13,
     fontWeight: 700,
     wordWrap: "on",
