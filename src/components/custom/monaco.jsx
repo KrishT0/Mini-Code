@@ -36,6 +36,7 @@ const MonacoEditorComponent = forwardRef(({ language, defaultCode }, ref) => {
 
   useImperativeHandle(ref, () => ({
     getValue: () => editorRef.current.getValue(),
+    getEditorRef: () => editorRef.current._domElement,
   }));
 
   return (

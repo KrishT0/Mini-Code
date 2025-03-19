@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import domtoimage from "dom-to-image";
 import { useMutation } from "@tanstack/react-query";
 import { executeCode } from "@/api";
 import MonacoEditorComponent from "@/components/custom/monaco";
@@ -61,6 +62,15 @@ function EditorComponent() {
     setOutput("");
   }
 
+  async function shareCode() {
+    const code = editorRef.current.getEditorRef();
+    const dataUrl = await domtoimage.toPng(code);
+    const link = document.createElement("a");
+    link.download = `social-code.png`;
+    link.href = dataUrl;
+    link.click();
+  }
+
   const displayLang = (lang) => {
     if (lang === "csharp") {
       return "C#";
@@ -112,6 +122,15 @@ function EditorComponent() {
         >
           Clear Output
         </Button>
+        {isDesktop && (
+          <Button
+            className="ml-3 font-bold"
+            variant="secondary"
+            onClick={shareCode}
+          >
+            Share
+          </Button>
+        )}
       </div>
       <div className="h-[90%] sm:h-[88%]">
         <ResizablePanelGroup
