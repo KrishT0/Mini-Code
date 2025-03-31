@@ -66,7 +66,7 @@ function EditorComponent() {
     const code = editorRef.current.getEditorRef();
     const dataUrl = await domtoimage.toPng(code);
     const link = document.createElement("a");
-    link.download = `social-code.png`;
+    link.download = `${language}-code.png`;
     link.href = dataUrl;
     link.click();
   }
