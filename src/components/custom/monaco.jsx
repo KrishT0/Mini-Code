@@ -7,10 +7,12 @@ import {
 } from "react";
 import Editor from "@monaco-editor/react";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useTheme } from "@/context/theme-provider";
 
 const MonacoEditorComponent = forwardRef(({ language, defaultCode }, ref) => {
   const [code, setCode] = useState(defaultCode);
   const editorRef = useRef();
+  const { theme } = useTheme();
   const isSmallScreen = useMediaQuery("(min-width: 500px)");
 
   useEffect(() => {
@@ -39,15 +41,31 @@ const MonacoEditorComponent = forwardRef(({ language, defaultCode }, ref) => {
     getEditorRef: () => editorRef.current._domElement,
   }));
 
+  console.log(theme);
+  console.log(window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const getTheme = () => {
+    if (theme === "dark") {
+      return "vs-dark";
+    } else if (theme === "light") {
+      return "light";
+    } else if (
+      // theme === "system" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      return "vs-dark";
+    }
+  };
+
   return (
     <Editor
       height="100%"
       defaultLanguage={language}
       language={language}
-      theme="vs-dark"
+      theme={getTheme()}
       onMount={onMount}
       value={code}
       onChange={(value) => setCode(value)}
+      
       options={editorOptions}
     />
   );
