@@ -65,7 +65,6 @@ const MonacoEditorComponent = forwardRef(({ language, defaultCode }, ref) => {
       onMount={onMount}
       value={code}
       onChange={(value) => setCode(value)}
-      
       options={editorOptions}
     />
   );
