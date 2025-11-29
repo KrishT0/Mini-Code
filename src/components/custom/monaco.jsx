@@ -41,18 +41,15 @@ const MonacoEditorComponent = forwardRef(({ language, defaultCode }, ref) => {
     getEditorRef: () => editorRef.current._domElement,
   }));
 
-  console.log(theme);
-  console.log(window.matchMedia("(prefers-color-scheme: dark)").matches);
   const getTheme = () => {
     if (theme === "dark") {
       return "vs-dark";
     } else if (theme === "light") {
       return "light";
-    } else if (
-      // theme === "system" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       return "vs-dark";
+    } else {
+      return "light";
     }
   };
 
